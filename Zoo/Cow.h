@@ -3,9 +3,9 @@
 #include <string>
 #include <format>
 
-#ifndef ANIMAL_HEADER
+//#ifndef ANIMAL_HEADER
 #include "Animal.h"
-#endif
+//#endif
 
 #define COW_HEADER
 
