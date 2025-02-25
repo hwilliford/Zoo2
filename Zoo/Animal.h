@@ -1,7 +1,8 @@
-#pragma once
 #include <iostream>
 #include <string>
 #include <format>
+
+#define ANIMAL_HEADER
 
 using namespace std;
 
@@ -10,6 +11,7 @@ class Animal	// base class
 private:
 	std::string name;
 	std::string title;
+	std::string greeting;
 	std::string animalLicense;
 	static int numAnimals;				// initialization for static in is done at end of file.
 
@@ -31,14 +33,15 @@ public:
 
 
 	Animal();
-	Animal(const Animal &);							// copy construtor
+	Animal(const Animal&);							// copy construtor
 	Animal(const std::string&, const std::string&);
-//	Animal(const std::string&, const std::string&, const Animal::BodyStructure);
+	//	Animal(const std::string&, const std::string&, const Animal::BodyStructure);
 	~Animal();	// destructor
 	void Print() const;
 
 	const std::string GetName() const { return name; }
 	const std::string GetTitle() const { return title; }
+	const std::string GetGreeting() const { return greeting; }
 	const std::string GetLicense() const { return animalLicense; }
 
 	const std::string GetBodyStructure() const {
@@ -68,8 +71,8 @@ public:
 		case aeial:
 			return "aeial";
 			break;
-		case undifined_h: 
-			return "undifined_h"; 
+		case undifined_h:
+			return "undifined_h";
 			break;
 		default:
 			return "should not have got here: Gethabitat();";
@@ -90,8 +93,8 @@ public:
 		case detritivore:
 			return "detritivore";
 			break;
-		case undifined_d: 
-			return "undifined_d"; 
+		case undifined_d:
+			return "undifined_d";
 			break;
 		default:
 			return "should not have got here: GetDiet();";
@@ -136,10 +139,10 @@ public:
 			return "should not have got here: GetRespiration()";
 
 		}
-	};
+	}
 
 	void SetBodyStructureVerterbrate() { bodyStructure = verterbrate; }
-	void SetBodyStructureInverterbreate() {	bodyStructure = inverterbrate; };
+	void SetBodyStructureInverterbreate() { bodyStructure = inverterbrate; }
 	void SetHabitatTerestrial() { habitat = terrestrial; }
 	void SetHabitatAquatic() { habitat = aquatic; }
 	void SetHabitatAeial() { habitat = aeial; }
@@ -148,28 +151,29 @@ public:
 	void SetDietOmnivore() { diet = omnivore; }
 	void SetDietDetritivore() { diet = detritivore; }
 	void SetLocomotionWalking() { locomotion = walking; }
-  	void SetLocomotionFlying() { locomotion = flying; }
- 	void SetLocomotionSwimming() { locomotion = swimming; }
- 	void SetLocomotionCrawling() { locomotion = crawling; }
+	void SetLocomotionFlying() { locomotion = flying; }
+	void SetLocomotionSwimming() { locomotion = swimming; }
+	void SetLocomotionCrawling() { locomotion = crawling; }
 	void SetRespirationLungs() { respiration = lungs; }
 	void SetRespirationGills() { respiration = gills; }
-	void SetName(const std::string& s) { name = s; };
-	void SetTitle(const std::string& t) { title = t; };
+	void SetName(const std::string& s) { name = s; }
+	void SetTitle(const std::string& t) { title = t; }
+	void SetGreeting(const std::string& g) { greeting = g; }
 
 	static int GetNumberAnimals() { return numAnimals; }
 
 };
 
-
-
 void Animal::Print() const
 {
-	std::cout << std::format("{:05} {:>30} {:<30} {:>15} {:>20p}\n", GetNumberAnimals(), GetTitle(), GetName(), GetLicense(), (void*)this );
-	std::cout << std::format("\tBody Structure :{:>15}\n", GetBodyStructure() );
-	std::cout << std::format("\tHabitat        :{:>15}\n", GetHabitat() );
-	std::cout << std::format("\tDiet           :{:>15}\n", GetDiet() );
-	std::cout << std::format("\tLocomotion     :{:>15}\n", GetLocomotion() );
-	std::cout << std::format("\tRespiration    :{:>15}\n", GetRespiration() );
+	std::cout << std::format("{:05} {:>10} {:<30} {:>15} {:>20p}\n",
+		GetNumberAnimals(), GetTitle(), GetName(), GetLicense(), (void*)this);
+	std::cout << std::format("\tGreeting       :{:>15}\n", GetGreeting());
+	std::cout << std::format("\tBody Structure :{:>15}\n", GetBodyStructure());
+	std::cout << std::format("\tHabitat        :{:>15}\n", GetHabitat());
+	std::cout << std::format("\tDiet           :{:>15}\n", GetDiet());
+	std::cout << std::format("\tLocomotion     :{:>15}\n", GetLocomotion());
+	std::cout << std::format("\tRespiration    :{:>15}\n", GetRespiration());
 }
 
 Animal::Animal() {
@@ -179,12 +183,14 @@ Animal::Animal() {
 	animalLicense = "TODO: implement";
 	name = "john doe";
 	title = "mr.";
+	greeting = "unknown";
 
 	numAnimals++;
+	std::cout << format("default Animal created.\n");
 }
 
 // inline 
-Animal::Animal(const Animal &a)	// copy constructor
+Animal::Animal(const Animal& a)	// copy constructor
 {
 	bodyStructure = a.bodyStructure;
 	habitat = a.habitat;
@@ -194,18 +200,22 @@ Animal::Animal(const Animal &a)	// copy constructor
 	animalLicense = a.animalLicense;
 	this->name = a.name;
 	this->title = a.title;
+	this->greeting = a.greeting;
 
 	numAnimals++;
+	std::cout << format("Animal coppied.\n");
 }
 
-Animal::Animal(const std::string &n, const std::string &t) {
+Animal::Animal(const std::string& n, const std::string& t) {
 
 	animalLicense = "TODO: implement";
 
 	name = n;
 	title = t;
+	greeting = "unknown";
 
 	numAnimals++;
+	std::cout << format("Animal created by name and title.\n");
 }
 
 Animal::~Animal() {
@@ -216,3 +226,34 @@ Animal::~Animal() {
 
 // initialize the number of Animals. 
 int Animal::numAnimals = 0;
+
+void testAnimal() {
+	Animal* a0 = new Animal();				// make john doe.
+	a0->Print();
+
+	Animal* a1 = new Animal("Lily", "Miss");
+	a1->Print();
+
+	Animal* a2 = new Animal("Bessie", "Miss");
+	a2->Print();
+
+	Animal* a3 = new Animal(*a0);		// make a copy of a0 into a3.
+	a3->Print();
+
+	a3->SetName("Brownie");				// modify a3
+	a3->SetTitle("Sr.");
+	a3->SetBodyStructureVerterbrate();
+	a3->SetHabitatTerestrial();
+	a3->SetDietHerbivore();
+	a3->SetLocomotionWalking();
+	a3->SetRespirationLungs();
+
+	a3->Print();						// print modifyed a3
+
+	delete a1;
+	delete a2;
+	delete a3;
+
+	a0->Print();
+	// delete a0;
+}

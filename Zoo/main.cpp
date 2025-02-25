@@ -1,12 +1,15 @@
-//#include <iostream>
-//#include "Animal.h"
-#include "testAnimal.cpp"
+#include <iostream>
 
-// namespace Animal;
+#ifndef ANIMAL_HEADER
+#include "Animal.h"
+#endif
+
+#include "Cow.h"
 
 int main() {
-	
+
 	testAnimal();
+	testCow();
 
 	return 0;
 }
