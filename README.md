@@ -5,7 +5,7 @@ Welcome to the Animal Class Project! This project defines a basic `Animal` class
 
 ## Project Structure
 - `Animal.h`: Header file containing the definition of the `Animal` class and a testing function to use the class functions.
-- `Cow.h` : Example files demonstrating the creation of a `Cow` class that inherits from the `Animal` class.
+- `Cow.h` : Example files demonstrating the creation of a `Cow` class that inherits from the `Animal` class. A Cow IS-A Animal.
 - `main.cpp`: A sample main program that showcases how to use the `testAnimal` and `testCow` functions.
 - `README.md`: This file provides an overview of the project and instructions for use.
 
