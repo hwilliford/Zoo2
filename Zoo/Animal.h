@@ -4,6 +4,12 @@
 #include <format>
 
 #define ANIMAL_HEADER
+#define ENABLE_DEBUG		// comment out to disable debugging
+
+#ifdef ENABLE_DEBUG
+const std::string debugHeader = "info : \t";
+#endif
+
 
 using namespace std;
 
@@ -160,9 +166,19 @@ public:
 	void SetName(const std::string& s) { name = s; }
 	void SetTitle(const std::string& t) { title = t; }
 	void SetGreeting(const std::string& g) { greeting = g; }
+	void SetLicense(size_t length) {
+		const std::string characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+		std::string rs;
+
+		for (size_t i = 0; i < length; ++i) 
+			rs += characters[rand() % characters.length()];
+
+		animalLicense = ISA() + "-" + rs;
+	}
 
 	static int GetNumberAnimals() { return numAnimals; }
 
+	std::string ISA() { return "animal"; }
 };
 
 void Animal::Print() const
@@ -181,13 +197,16 @@ Animal::Animal() {
 	//	default construtor.
 	//	all strings are constructed with an empty value by default.
 
-	animalLicense = "TODO: implement";
+	SetLicense(5);
+//	animalLicense = "TODO: implement";
 	name = "john doe";
 	title = "mr.";
 	greeting = "unknown";
 
 	numAnimals++;
-	std::cout << format("default Animal created.\n");
+#ifdef ENABLE_DEBUG
+	std::cerr << debugHeader << format("{:30} {:p}.\n", "Default Animal created", (void*)this);
+#endif
 }
 
 // inline 
@@ -204,25 +223,31 @@ Animal::Animal(const Animal& a)	// copy constructor
 	this->greeting = a.greeting;
 
 	numAnimals++;
-	std::cout << format("Animal coppied.\n");
+#ifdef ENABLE_DEBUG
+	std::cerr << debugHeader << format( "{:30} {:p}.\n", "Animal copied", (void*)this);
+#endif
 }
 
 Animal::Animal(const std::string& n, const std::string& t) {
 
-	animalLicense = "TODO: implement";
+	SetLicense(5);
+//	animalLicense = "TODO: implement";
 
 	name = n;
 	title = t;
 	greeting = "unknown";
 
 	numAnimals++;
-	std::cout << format("Animal created by name and title.\n");
+#ifdef ENABLE_DEBUG
+	std::cerr << debugHeader << format("{:30} {:p}.\n", "Animal created by name and title", (void*)this);
+#endif
 }
 
 Animal::~Animal() {
-	std::cout << std::format("Destructor called for {:p}\n", (void*)this);
-
 	numAnimals--;
+#ifdef ENABLE_DEBUG
+	std::cerr << debugHeader << std::format("{:30} {:p}.\n", "Destructor called for", (void*)this);
+#endif
 }
 
 // initialize the number of Animals. 
