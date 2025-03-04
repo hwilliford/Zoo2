@@ -1,12 +1,12 @@
 #pragma once
+#ifndef ANIMAL_HEADER
+#include "Animal.h"
+#endif
+
 #include <iostream>
 #include <string>
 #include <format>
 #include <random>
-
-//#ifndef ANIMAL_HEADER
-#include "Animal.h"
-//#endif
 
 #define COW_HEADER
 
@@ -49,10 +49,17 @@ public:
 
 		numCow++;
 #ifdef ENABLE_DEBUG
-		std::cout << debugHeader << format("{} {:>9} {:15p}.\n", "Created a named cow", n, (void*)this);
+		std::cerr << debugHeader << format("{} {:>9} {:15p}.\n", "Created a named cow", n, (void*)this);
 #endif
 
 	}
+	/*
+	Cow::~Cow() {
+		numCow--;
+#ifdef ENABLE_DEBUG
+		std::cerr << debugHeader << std::format("{:30} {:<016p}.\n", "Cow Destructor called for", (void*)this);
+#endif
+	}*/
 
 	void Print() const;
 	void SetCowName(const std::string& s);
@@ -92,7 +99,12 @@ inline unsigned int Cow::GetRandomCowWeight()
 	return dis(gen);
 };
 
+// overloaded assignment operator
 Cow &Cow::operator=(const Cow &c) {
+#ifdef DEBUG
+	std::cerr << debugHeader << std::format("{} {:15p} {:15p}.\n", "overloaded= Cow", (void*)c, (void*)this");
+#endif // DEBUG
+
 	if (this != &c) {
 		//Cow::operator=(c);
 		// delete any dynamically allocated data members in destination
@@ -103,6 +115,7 @@ Cow &Cow::operator=(const Cow &c) {
 	}
 	return *this;	// for cascaded assignments, c0 = c1 = c2;
 }
+
 bool operator<(const Cow& c0, const Cow& c1) {
 	return c0.GetCowWeight() < c1.GetCowWeight();
 }
