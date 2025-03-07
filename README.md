@@ -12,18 +12,22 @@ Welcome to the Animal Class Project! This project defines a basic `Animal` class
 ## Getting Started
 To get started with the Animal Class Project, follow these steps:
 
-1. Clone the repository to your local machine:
+1. Move to the directory you want the working copy of the files. In my case I will have them off my ${HOME} directory in a sub directory "Code", then a layer deeper into "repo".
+   ```bash
+   cd ~/Code/repo
+   
+2. Clone the repository to your local machine by moving to the directory you want the files.:
    ```bash
    git clone https://github.com/hwilliford/Zoo2.git
 
-2. Change to the directory where the source files are stored:
+3. Change to the directory where the source files are stored:
    ```bash
    cd Zoo2/Zoo
    
-3. Compile using C++20 features
+4. Compile using C++20 features
    ```bash
    g++ -std=c++20 -o zoo main.cpp
 
-4. excute and enjoy the running code.
+5. excute and enjoy the running code.
    ```bash
    ./zoo
