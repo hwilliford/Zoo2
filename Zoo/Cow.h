@@ -17,9 +17,11 @@ private:
 	static constexpr int COW_Life = 35;
 	static int numCow;				// initialization for static in is done at end of file.
 	unsigned int weightLbs{ GetRandomCowWeight() };
+	std::string ISA{ "cow" };
 
 public:
 	Cow() : Animal() {
+//		std::string ISA() { return "cow"; }
 		SetGreeting("Moo");
 		SetLicense(5);
 		SetTitle("");
@@ -34,6 +36,18 @@ public:
 		std::cerr << debugHeader << format("{:30} {:p}.\n", "Default cow created", (void*)this);
 #endif
 	}
+
+	/*
+	Cow(const Cow& c) : Animal() {						// copy construtor
+
+		this->weightLbs = c.weightLbs;
+
+		numCow++;
+#ifdef ENABLE_DEBUG
+		std::cerr << debugHeader << format("{:30} {:p}.\n", "Copy of cow created", (void*)this);
+#endif
+	}
+	*/
 
 	Cow(const std::string& n) : Animal() {
 		SetGreeting("Moo");
@@ -53,13 +67,15 @@ public:
 #endif
 
 	}
-	/*
-	Cow::~Cow() {
+
+//	/*
+	~Cow() {
 		numCow--;
 #ifdef ENABLE_DEBUG
 		std::cerr << debugHeader << std::format("{:30} {:<016p}.\n", "Cow Destructor called for", (void*)this);
 #endif
-	}*/
+	}
+//	*/
 
 	void Print() const;
 	void SetCowName(const std::string& s);
@@ -70,7 +86,7 @@ public:
 
 	static int GetCowNumber() { return numCow; }
 
-	std::string ISA(){ return "cow"; }
+	//std::string ISA(){ return "cow"; }
 
 	//	void TestCow();
 };
