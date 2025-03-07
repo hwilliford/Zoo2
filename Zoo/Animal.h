@@ -178,7 +178,7 @@ public:
 
 	static int GetNumberAnimals() { return numAnimals; }
 
-	std::string ISA() { return "animal"; }
+	const std::string ISA() { return "animal"; }
 };
 
 void Animal::Print() const
@@ -246,7 +246,7 @@ Animal::Animal(const std::string& n, const std::string& t) {
 Animal::~Animal() {
 	numAnimals--;
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:30} {:p}.\n", "Destructor called for", (void*)this);
+	std::cerr << debugHeader << std::format("{:30} {:<016p}.\n", "Animal destructor called for", (void*)this);
 #endif
 }
 
