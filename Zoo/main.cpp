@@ -109,8 +109,10 @@ void testDeque() {
 
 	// insert one past the beginning
 	cowDeque.insert(std::next(cowDeque.begin()), Cow("Marigold"));
+	cowDeque.insert(cowDeque.begin(), Cow("Marigold II"));
 
-	cowDeque[1] = Cow("Cocoa");	// replace the 0th element (no bounds checking)
+	cowDeque[0] = Cow("Cocoa");	// replace the 0th element (no bounds checking)
+	cowDeque[3] = *c0;
 
 	while (!cowDeque.empty()) {
 		cowDeque.front().Print();
@@ -168,13 +170,17 @@ void testMap() {
 	// insert using virtual indices per map
 	cowMap[c3.GetLicense()] = c3;
 
+	// lets iterate using a range-for loop with 'auto'
+	// Output should be by order of animalLicense
+	for (auto& [animalLicense, cow] : cowMap)
+		cow.Print();
+
 	// iterate through set with map iterator
 	map<string, Cow>::iterator mapIter = cowMap.begin();
-//	mapIter = cowMap.begin();
 	while (mapIter != cowMap.end()) {
 		pair<string, Cow> temp = *mapIter;
-		Cow& tempS = temp.second;			// get the 2nd element.
-		tempS.Print();						// print it
+		Cow& tempC = temp.second;			// get the 2nd element.
+		tempC.Print();						// print it
 
 		++mapIter;
 	}
