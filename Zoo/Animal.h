@@ -173,12 +173,13 @@ public:
 		for (size_t i = 0; i < length; ++i) 
 			rs += characters[rand() % characters.length()];
 
-		animalLicense = ISA() + "-" + rs;
+		animalLicense = IsA() + "-" + rs;
 	}
 
 	static int GetNumberAnimals() { return numAnimals; }
 
-	const std::string ISA() { return "animal"; }
+//	string IsA() const override;
+	const std::string IsA() { return "animal"; }
 };
 
 void Animal::Print() const
@@ -205,7 +206,7 @@ Animal::Animal() {
 
 	numAnimals++;
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << format("{:30} {:p}.\n", "Default Animal created", (void*)this);
+	std::cerr << debugHeader << format("{:40} {:>15p}.\n", "Default Animal created", (void*)this);
 #endif
 }
 
@@ -224,7 +225,7 @@ Animal::Animal(const Animal& a)	// copy constructor
 
 	numAnimals++;
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << format( "{:30} {:p}.\n", "Animal copied", (void*)this);
+	std::cerr << debugHeader << format( "{:40} {:>15p}.\n", "Animal copied", (void*)this);
 #endif
 }
 
@@ -246,7 +247,7 @@ Animal::Animal(const std::string& n, const std::string& t) {
 Animal::~Animal() {
 	numAnimals--;
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:30} {:<016p}.\n", "Animal destructor called for", (void*)this);
+	std::cerr << debugHeader << std::format("{:40} {:>15p}.\n", "Animal destructor called for", (void*)this);
 #endif
 }
 

@@ -18,18 +18,25 @@ using std::map;
 using std::pair;
 
 #include <iostream>
+#include <string>
+#include <format>
+using std::format;
 
 #include "Animal.h"
 #include "Cow.h"
 
 void testLinkedList() {
+	std::cout << format ("{:*^80}\n", " Test for LinkedList() ");
+
 	list<Cow>	cowList;	// create a list of cows.
 
 	// Get some cows, name them and put them into a list.
 	Cow* c0 = new Cow();	// make a new cow in dynamic memory
 	c0->SetName("Mr. Moo");	// use member function to SetName of cow c0.
-
 	cowList.push_back(*c0);	// add the cow to the heardList.
+
+	auto c0a = std::make_unique<Cow>(Cow("Jr. Moo"));		// example of safe pointer useage.
+	cowList.push_back(*c0a);
 
 	// The next 4 instances are anonymous objects in main()
 	// There is no way to access them outside of the heardList.
@@ -47,6 +54,8 @@ void testLinkedList() {
 }
 
 void testIterator() {
+	std::cout << format("{:*^80}\n", " Test for Iterator() ");
+
 	list<Cow> cowList;
 
 	Cow* c0 = new Cow();	// make a new cow in dynamic memory
@@ -71,6 +80,8 @@ void testIterator() {
 }
 
 void testVector() {
+	std::cout << format("{:*^80}\n", " Test for Vector() ");
+
 	vector<Cow> cowVector1, cowVector2;
 
 	// add 3 cows as anonymous objects 
@@ -99,6 +110,8 @@ void testVector() {
 }
 
 void testDeque() {
+	std::cout << format("{:*^80}\n", " Test for Deque() ");
+
 	deque<Cow> cowDeque;		// pronounced deck
 	Cow *c0 = new Cow("Butterbean");
 
@@ -121,6 +134,8 @@ void testDeque() {
 }
 
 void testStack() {
+	std::cout << format("{:*^80}\n", " Test for Stack() ");
+
 	stack<Cow> cowStack;	// create a stack
 
 	// add Cows to the stack (anonymous objects)
@@ -151,6 +166,8 @@ void testQueue() {
 }
 
 void testMap() {
+	std::cout << format("{:*^80}\n", " Test for Map() ");
+
 	Cow c0 ("Tilly");
 	Cow c1 ("Juniper");
 	Cow c2 ("MooMoo");
@@ -193,6 +210,7 @@ void testMap() {
 
 int main() {
 
+	std::cout << format("{:*^80}\n", " Start of testing STL containters ");
 	testLinkedList();
 	testIterator();
 	testVector();
@@ -200,6 +218,6 @@ int main() {
 	testStack();
 	testQueue();
 	testMap();
-
+	std::cout << format("{:*^80}\n", " End of testing STL containters ");
 	return 0;
 }

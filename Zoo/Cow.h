@@ -17,11 +17,9 @@ private:
 	static constexpr int COW_Life = 35;
 	static int numCow;				// initialization for static in is done at end of file.
 	unsigned int weightLbs{ GetRandomCowWeight() };
-	std::string ISA{ "cow" };
 
 public:
 	Cow() : Animal() {
-//		std::string ISA() { return "cow"; }
 		SetGreeting("Moo");
 		SetLicense(5);
 		SetTitle("");
@@ -33,23 +31,30 @@ public:
 
 		numCow++;
 #ifdef ENABLE_DEBUG
-		std::cerr << debugHeader << format("{:30} {:p}.\n", "Default cow created", (void*)this);
+		std::cerr << debugHeader << format("{:40} {:>15p}.\n", "Default cow created", (void*)this);
 #endif
 	}
 
-	/*
 	Cow(const Cow& c) : Animal() {						// copy construtor
 
 		this->weightLbs = c.weightLbs;
+		SetName( c.GetName() );
+
+		SetTitle("");
+		SetGreeting("Moo");
+		SetBodyStructureVerterbrate();
+		SetHabitatTerestrial();
+		SetDietHerbivore();
+		SetLocomotionWalking();
+		SetRespirationLungs();
 
 		numCow++;
 #ifdef ENABLE_DEBUG
-		std::cerr << debugHeader << format("{:30} {:p}.\n", "Copy of cow created", (void*)this);
+		std::cerr << debugHeader << format("{:40} {:>15p}.\n", "Copy of cow created", (void*)this);
 #endif
 	}
-	*/
-
-	Cow(const std::string& n) : Animal() {
+	
+	Cow(const std::string& n) : Animal() {				// create named cow
 		SetGreeting("Moo");
 		SetLicense(5);
 		SetTitle("");
@@ -63,21 +68,20 @@ public:
 
 		numCow++;
 #ifdef ENABLE_DEBUG
-		std::cerr << debugHeader << format("{} {:>9} {:15p}.\n", "Created a named cow", n, (void*)this);
+		std::cerr << debugHeader << format("{:26} {:13} {:>15p}.\n", "Created a named cow", n, (void*)this);
 #endif
 
 	}
 
-//	/*
-	~Cow() {
+	~Cow() {											// defualt cow destructor
 		numCow--;
 #ifdef ENABLE_DEBUG
-		std::cerr << debugHeader << std::format("{:30} {:<016p}.\n", "Cow Destructor called for", (void*)this);
+		std::cerr << debugHeader << std::format("{:40} {:>15p}.\n", "Cow Destructor called for", (void*)this);
 #endif
 	}
-//	*/
 
 	void Print() const;
+	std::string IsA() {return "cow"; };
 	void SetCowName(const std::string& s);
 
 	unsigned int GetRandomCowWeight();
@@ -85,10 +89,6 @@ public:
 	unsigned int GetCowWeight() const { return weightLbs; }
 
 	static int GetCowNumber() { return numCow; }
-
-	//std::string ISA(){ return "cow"; }
-
-	//	void TestCow();
 };
 
 void Cow::Print() const {
@@ -159,3 +159,8 @@ inline void testCow() {
 
 	c0->Print();
 };
+
+
+int AddCowToCowList(Cow* c) {
+	return 0;
+}
