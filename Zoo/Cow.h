@@ -25,7 +25,7 @@ public:
 		SetTitle("");
 		SetBodyStructureVerterbrate();
 		SetHabitatTerestrial();
-		SetDietHerbivore();
+		SetDietOmnivore();
 		SetLocomotionWalking();
 		SetRespirationLungs();
 
@@ -39,6 +39,7 @@ public:
 
 		this->weightLbs = c.weightLbs;
 		SetName( c.GetName() );
+		SetLicense(c.GetLicense());
 
 		SetTitle("");
 		SetGreeting("Moo");
@@ -81,7 +82,7 @@ public:
 	}
 
 	void Print() const;
-	std::string IsA() {return "cow"; };
+	std::string IsA() const override;
 	void SetCowName(const std::string& s);
 
 	unsigned int GetRandomCowWeight();
@@ -92,9 +93,11 @@ public:
 };
 
 void Cow::Print() const {
-	std::cout << std::format("this is a cow number {:05}, it says {}, it is {:04} Lbs\n", GetCowNumber(), GetGreeting(), GetCowWeight());
 
 	this->Animal::Print();
+	std::cout << std::format("\t{:+<72}\n", "Cow data ");
+	std::cout << std::format("\tCow Number      :{:>20}\n", GetCowNumber());
+	std::cout << std::format("\tCow weight (lbs):{:>20}\n", GetCowWeight());
 };
 
 inline void Cow::SetCowName(const std::string& s)
@@ -108,17 +111,13 @@ inline unsigned int Cow::GetRandomCowWeight()
 	int const MIN = 800;
 	int const MAX = 1400;
 
-	std::random_device rd;  // seed generator
-	std::mt19937 gen(rd()); // Mersenne Twister engine
-	std::uniform_int_distribution<> dis(MIN, MAX);
-
-	return dis(gen);
+	return RandomNumberAnimal(MIN, MAX);
 };
 
 // overloaded assignment operator
 Cow &Cow::operator=(const Cow &c) {
-#ifdef DEBUG
-	std::cerr << debugHeader << std::format("{} {:15p} {:15p}.\n", "overloaded= Cow", (void*)c, (void*)this);
+#ifdef ENABLE_DEBUG
+	std::cerr << debugHeader << std::format("{:<20} {:>15p} = {:<15p}.\n", "overloaded= for Cow", (void*)this, (void*)&c);
 #endif // DEBUG
 
 	if (this != &c) {
@@ -127,23 +126,30 @@ Cow &Cow::operator=(const Cow &c) {
 		// allocate any memory in destination for copies of source
 		// copy data members from source to desination object
 		SetCowName(c.GetName());
+		SetLicense(c.GetLicense());
 		weightLbs = c.weightLbs;
 	}
 	return *this;	// for cascaded assignments, c0 = c1 = c2;
 }
 
 bool operator<(const Cow& c0, const Cow& c1) {
+#ifdef ENABLE_DEBUG
+	std::cerr << debugHeader << std::format("{:<20} {:>15p} < {:<15p}.\n", "overloaded< for Cow", (void*)&c0, (void*)&c1);
+#endif // DEBUG
 	return c0.GetCowWeight() < c1.GetCowWeight();
 }
 
 bool operator==(const Cow& c0, const Cow& c1) {
+#ifdef ENABLE_DEBUG
+	std::cerr << debugHeader << std::format("{:<20} {:>15p} == {:<15p}.\n", "overloaded== for Cow", (void*)&c0, (void*)&c1);
+#endif // DEBUG
 	return (c0.GetCowWeight() == c1.GetCowWeight());
 }
 
-
-
 // initialize the number of Cows. 
 int Cow::numCow = 0;
+inline std::string Cow::IsA() const { return "cow"; };
+//std::string IsA() { return "cow"; };
 
 inline void testCow() {
 

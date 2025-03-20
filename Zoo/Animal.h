@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <format>
+#include <random>
+
 
 #define ANIMAL_HEADER
 #define ENABLE_DEBUG		// comment out to disable debugging
@@ -166,6 +168,11 @@ public:
 	void SetName(const std::string& s) { name = s; }
 	void SetTitle(const std::string& t) { title = t; }
 	void SetGreeting(const std::string& g) { greeting = g; }
+
+	void SetLicense(const std::string& s) {
+		animalLicense = s;
+	}
+
 	void SetLicense(size_t length) {
 		const std::string characters = "abcdefghijklmnopqrstuvwxyz0123456789";
 		std::string rs;
@@ -173,25 +180,41 @@ public:
 		for (size_t i = 0; i < length; ++i) 
 			rs += characters[rand() % characters.length()];
 
-		animalLicense = IsA() + "-" + rs;
+		animalLicense = rs + "-" + IsA();		// makes sorting by License more intresting. 
 	}
 
-	static int GetNumberAnimals() { return numAnimals; }
 
-//	string IsA() const override;
-	const std::string IsA() { return "animal"; }
+	static int GetNumberAnimals() { return numAnimals; };
+
+	virtual std::string IsA() const;
+
+	const unsigned int RandomNumberAnimal(unsigned int s, unsigned int e) {
+
+		std::random_device rd;  // seed generator
+		std::mt19937 gen(rd()); // Mersenne Twister engine
+		std::uniform_int_distribution<> dis(s, e);
+
+		return dis(gen);
+	}
 };
 
 void Animal::Print() const
 {
-	std::cout << std::format("{:05} {:>10} {:<30} {:>15} {:>20p}\n",
-		GetNumberAnimals(), GetTitle(), GetName(), GetLicense(), (void*)this);
-	std::cout << std::format("\tGreeting       :{:>15}\n", GetGreeting());
-	std::cout << std::format("\tBody Structure :{:>15}\n", GetBodyStructure());
-	std::cout << std::format("\tHabitat        :{:>15}\n", GetHabitat());
-	std::cout << std::format("\tDiet           :{:>15}\n", GetDiet());
-	std::cout << std::format("\tLocomotion     :{:>15}\n", GetLocomotion());
-	std::cout << std::format("\tRespiration    :{:>15}\n", GetRespiration());
+	std::cout << std::format("{:=^80}\n", " Animal Record ");
+#ifdef ENABLE_DEBUG
+	std::cout << std::format("\t{:40} {:>15p}.\n", "Object Address  :", (void*)this);
+#endif ENABLE_DEBUG
+
+	std::cout << std::format("\tCount of animals:{:>20}\n", GetNumberAnimals());
+	std::cout << std::format("\tTitle of animal :{:>20}\n", GetTitle());
+	std::cout << std::format("\tName of animal  :{:>20}\n", GetName());
+	std::cout << std::format("\tAnimal license #:{:>20}\n", GetLicense());
+	std::cout << std::format("\tGreeting        :{:>20}\n", GetGreeting());
+	std::cout << std::format("\tBody Structure  :{:>20}\n", GetBodyStructure());
+	std::cout << std::format("\tHabitat         :{:>20}\n", GetHabitat());
+	std::cout << std::format("\tDiet            :{:>20}\n", GetDiet());
+	std::cout << std::format("\tLocomotion      :{:>20}\n", GetLocomotion());
+	std::cout << std::format("\tRespiration     :{:>20}\n", GetRespiration());
 }
 
 Animal::Animal() {
@@ -223,6 +246,8 @@ Animal::Animal(const Animal& a)	// copy constructor
 	this->title = a.title;
 	this->greeting = a.greeting;
 
+	SetLicense(a.GetLicense());
+
 	numAnimals++;
 #ifdef ENABLE_DEBUG
 	std::cerr << debugHeader << format( "{:40} {:>15p}.\n", "Animal copied", (void*)this);
@@ -251,6 +276,8 @@ Animal::~Animal() {
 #endif
 }
 
+std::string Animal::IsA() const { return "animal"; };
+
 // initialize the number of Animals. 
 int Animal::numAnimals = 0;
 
@@ -258,16 +285,16 @@ void testAnimal() {
 	Animal* a0 = new Animal();				// make john doe.
 	a0->Print();
 
-	Animal* a1 = new Animal("Lily", "Miss");
+	Animal* a1 = new Animal("TestAnimal01", "Miss");
 	a1->Print();
 
-	Animal* a2 = new Animal("Bessie", "Miss");
+	Animal* a2 = new Animal("TestAnimal02", "Sir");
 	a2->Print();
 
 	Animal* a3 = new Animal(*a0);		// make a copy of a0 into a3.
 	a3->Print();
 
-	a3->SetName("Brownie");				// modify a3
+	a3->SetName("TestAnimal02.03");				// modify a3
 	a3->SetTitle("Sr.");
 	a3->SetBodyStructureVerterbrate();
 	a3->SetHabitatTerestrial();

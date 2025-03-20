@@ -24,6 +24,7 @@ using std::format;
 
 #include "Animal.h"
 #include "Cow.h"
+#include "Human.h"
 
 void testLinkedList() {
 	std::cout << format ("{:*^80}\n", " Test for LinkedList() ");
@@ -210,7 +211,14 @@ void testMap() {
 
 int main() {
 
+	std::cout << format("{:*^80}\n", " Start of animal testing ");
+	testAnimal();
+
+	std::cout << format("{:*^80}\n", " Start of cow testing ");
+	testCow();
+
 	std::cout << format("{:*^80}\n", " Start of testing STL containters ");
+
 	testLinkedList();
 	testIterator();
 	testVector();
@@ -218,6 +226,15 @@ int main() {
 	testStack();
 	testQueue();
 	testMap();
+
 	std::cout << format("{:*^80}\n", " End of testing STL containters ");
+	std::cout << format("{:*^80}\n", " End of cow testing ");
+
+	std::cout << format("{:*^80}\n", " Start of testing Human ");
+	humanTesting();
+
+	std::cout << format("{:*^80}\n", " End of testing Human ");
+
+	std::cout << format("{:*^80}\n", " End of code ");
 	return 0;
 }
