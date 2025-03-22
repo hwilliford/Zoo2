@@ -25,7 +25,7 @@ using std::pair;
 using std::format;
 #endif
 
-#if __cpp_lib_format
+#if __has_include(<fmt/format.h>)
 #include <fmt/format.h>
 using fmt::format;
 #endif
