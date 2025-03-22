@@ -27,6 +27,7 @@ To get started with the Animal Class Project, follow these steps:
 4. Compile using C++20 features
    ```bash
    g++ -std=c++20 -o zoo main.cpp
+   g++ -I fmt/include -std=c++20 -o zoo main.cpp -lfmt
 
 5. excute and enjoy the running code.
    ```bash
