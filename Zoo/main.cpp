@@ -33,6 +33,7 @@ using fmt::format;
 #include "Animal.h"
 #include "Cow.h"
 #include "Human.h"
+#include "Hathor.h"
 
 void testLinkedList() {
 	std::cout << format ("{:*^80}\n", " Test for LinkedList() ");
@@ -242,6 +243,10 @@ int main() {
 	humanTesting();
 
 	std::cout << format("{:*^80}\n", " End of testing Human ");
+
+	std::cout << format("{:*^80}\n", " Testing of Hathor ");
+	hathorTesting();
+	std::cout << format("{:*^80}\n", " End of testing on Hathor ");
 
 	std::cout << format("{:*^80}\n", " End of code ");
 	return 0;
