@@ -19,8 +19,16 @@ using std::pair;
 
 #include <iostream>
 #include <string>
+
+#if __has_include(<format>)
 #include <format>
 using std::format;
+#endif
+
+#if __cpp_lib_format
+#include <fmt/format.h>
+using fmt::format;
+#endif
 
 #include "Animal.h"
 #include "Cow.h"

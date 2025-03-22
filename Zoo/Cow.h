@@ -5,7 +5,17 @@
 
 #include <iostream>
 #include <string>
+
+#if __has_include(<format>)
 #include <format>
+using std::format;
+#endif
+
+#if __cpp_lib_format
+#include <fmt/format.h>
+using fmt::format;
+#endif
+
 #include <random>
 
 #define COW_HEADER
@@ -77,7 +87,7 @@ public:
 	~Cow() {											// defualt cow destructor
 		numCow--;
 #ifdef ENABLE_DEBUG
-		std::cerr << debugHeader << std::format("{:40} {:>15p}.\n", "Cow Destructor called for", (void*)this);
+		std::cerr << debugHeader << format("{:40} {:>15p}.\n", "Cow Destructor called for", (void*)this);
 #endif
 	}
 
@@ -95,9 +105,9 @@ public:
 void Cow::Print() const {
 
 	this->Animal::Print();
-	std::cout << std::format("\t{:+<72}\n", "Cow data ");
-	std::cout << std::format("\tCow Number      :{:>20}\n", GetCowNumber());
-	std::cout << std::format("\tCow weight (lbs):{:>20}\n", GetCowWeight());
+	std::cout << format("\t{:+<72}\n", "Cow data ");
+	std::cout << format("\tCow Number      :{:>20}\n", GetCowNumber());
+	std::cout << format("\tCow weight (lbs):{:>20}\n", GetCowWeight());
 };
 
 inline void Cow::SetCowName(const std::string& s)
@@ -117,7 +127,7 @@ inline unsigned int Cow::GetRandomCowWeight()
 // overloaded assignment operator
 Cow &Cow::operator=(const Cow &c) {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:<20} {:>15p} = {:<15p}.\n", "overloaded= for Cow", (void*)this, (void*)&c);
+	std::cerr << debugHeader << format("{:<20}  {:>14p}  =   {:<14p}.\n", "overloaded= for Cow", (void*)this, (void*)&c);
 #endif // DEBUG
 
 	if (this != &c) {
@@ -134,14 +144,14 @@ Cow &Cow::operator=(const Cow &c) {
 
 bool operator<(const Cow& c0, const Cow& c1) {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:<20} {:>15p} < {:<15p}.\n", "overloaded< for Cow", (void*)&c0, (void*)&c1);
+	std::cerr << debugHeader << format("{:<20}  {:>14p}  <   {:<14p}.\n", "overloaded< for Cow", (void*)&c0, (void*)&c1);
 #endif // DEBUG
 	return c0.GetCowWeight() < c1.GetCowWeight();
 }
 
 bool operator==(const Cow& c0, const Cow& c1) {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:<20} {:>15p} == {:<15p}.\n", "overloaded== for Cow", (void*)&c0, (void*)&c1);
+	std::cerr << debugHeader << format("{:<20} {:>15p} == {:<15p}.\n", "overloaded== for Cow", (void*)&c0, (void*)&c1);
 #endif // DEBUG
 	return (c0.GetCowWeight() == c1.GetCowWeight());
 }

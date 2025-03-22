@@ -1,7 +1,17 @@
 #pragma once
 #include <iostream>
 #include <string>
+
+#if __has_include(<format>)
 #include <format>
+using std::format;
+#endif
+
+#if __cpp_lib_format
+#include <fmt/format.h>
+using fmt::format;
+#endif
+
 #include <random>
 #include <queue>
 #include <map>
@@ -229,21 +239,21 @@ inline Human::~Human()
 void Human::Print() const {
 	this->Animal::Print();
 
-	std::cout << std::format("\t{:+<72}\n", "Human data ");
+	std::cout << format("\t{:+<72}\n", "Human data ");
 #ifdef ENABLE_DEBUG
-	std::cout << std::format("\t{:40} {:>15p}.\n", "Object Address  :", (void*)this);
+	std::cout << format("\t{:40} {:>15p}.\n", "Object Address  :", (void*)this);
 	std::map<string, Human> hMap{ Human::GetCopyHumanMap() };
 	std::map<string, Human>::iterator hMapIter = hMap.begin();
-	std::cout << std::format("\t{:40} {:>15}.\n", "humanMap.size   :", hMap.size());
+	std::cout << format("\t{:40} {:>15}.\n", "humanMap.size   :", hMap.size());
 #endif // ENABLE_DEBUG
 	
-	std::cout << std::format("\tID Number       :{:>20}\n", GetLicense());
-	std::cout << std::format("\tName            :{:>20}\n", GetName());
-	std::cout << std::format("\tEye color       :{:>20}\n", GetEyeColor());
-	std::cout << std::format("\tHair color      :{:>20}\n", GetHairColor());
-	std::cout << std::format("\tSkin color      :{:>20}\n", GetSkinColor());
-	std::cout << std::format("\theight (cm)     :{:>20}\n", GetHeight());
-	std::cout << std::format("\tWeight (kg)     :{:>20}\n", GetWeight());
+	std::cout << format("\tID Number       :{:>20}\n", GetLicense());
+	std::cout << format("\tName            :{:>20}\n", GetName());
+	std::cout << format("\tEye color       :{:>20}\n", GetEyeColor());
+	std::cout << format("\tHair color      :{:>20}\n", GetHairColor());
+	std::cout << format("\tSkin color      :{:>20}\n", GetSkinColor());
+	std::cout << format("\theight (cm)     :{:>20}\n", GetHeight());
+	std::cout << format("\tWeight (kg)     :{:>20}\n", GetWeight());
 }
 
 inline const Human::EyeColour Human::GetRandomEyeColor()
@@ -326,7 +336,7 @@ inline unsigned int Human::GetRandomHumanHeight()
 inline void Human::registerHuman(Human &h)
 {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:26} {:13} {:>15p}.\n", "Human registered", h.GetName(), (void*)this);
+	std::cerr << debugHeader << format("{:26} {:13} {:>15p}.\n", "Human registered", h.GetName(), (void*)this);
 #endif
 	pair<string, Human> hp(h.GetLicense(), h);
 	humanMap.insert(hp);
@@ -358,7 +368,7 @@ inline const std::string Human::GetSkinColor()
 inline Human::Human(const Human&h)								// copy constructor
 {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:<20}  {:>14p}  <-  {:>14p}.\n", "Copy Human", (void*)this, (void*)&h);
+	std::cerr << debugHeader << format("{:<20}  {:>14p}  <-  {:>14p}.\n", "Copy Human", (void*)this, (void*)&h);
 #endif // DEBUG
 	eyeColor = h.eyeColor;
 	hairColor = h.hairColor;
@@ -382,7 +392,7 @@ inline Human::Human(const Human&h)								// copy constructor
 const bool Human::operator==(const Human&h)					// is equal / comparison operator
 {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:<20} {:>15p} == {:<15p}.\n", "overloaded ++ for Human", (void*)this, (void*)&h);
+	std::cerr << debugHeader << format("{:<20} {:>15p} == {:<15p}.\n", "overloaded ++ for Human", (void*)this, (void*)&h);
 #endif // ENABLE_DEBUG
 	bool b{ this->GetLicense()==h.GetLicense() };
 
@@ -396,7 +406,7 @@ const bool Human::operator==(const Human&h)					// is equal / comparison operato
 inline Human& Human::operator=(const Human &h)					// move assignment operator
 {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:<20}  {:>16p} = {:>14p}.\n", "overloaded= for Human", (void*)this, (void*)&h);
+	std::cerr << debugHeader << format("{:<20}  {:>16p} = {:>14p}.\n", "overloaded= for Human", (void*)this, (void*)&h);
 #endif // DEBUG
 
 	if (this != &h) {
@@ -417,7 +427,7 @@ inline Human& Human::operator=(const Human &h)					// move assignment operator
 inline const bool Human::operator<(const Human& h0)
 {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:20} {:>15p} < {:<15p}.\n", "overloaded< for Human", (void*)this, (void*)&h0);
+	std::cerr << debugHeader << format("{:20} {:>15p} < {:<15p}.\n", "overloaded< for Human", (void*)this, (void*)&h0);
 #endif // DEBUG
 
 	return GetLicense() < h0.GetLicense();
@@ -428,7 +438,7 @@ inline const bool Human::operator<(const Human& h0, const Human& h1)
 {
 
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:20} {:>15p} = {:<15p}.\n", "overloaded< for Human", (void*)&h0, (void*)&h1);
+	std::cerr << debugHeader << format("{:20} {:>15p} = {:<15p}.\n", "overloaded< for Human", (void*)&h0, (void*)&h1);
 #endif // DEBUG
 	return h0.GetLicense() < h1.GetLicense();
 }
@@ -436,7 +446,7 @@ inline const bool Human::operator<(const Human& h0, const Human& h1)
 
 void Human::RecordHuman(const Human& h) {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:<20} {:<15p}).\n", "RecordHuman()", (void*)&h);
+	std::cerr << debugHeader << format("{:<20} {:<15p}).\n", "RecordHuman()", (void*)&h);
 #endif // DEBUG
 
 	pair<string, Human> hp(h.GetLicense(), h);
@@ -447,7 +457,7 @@ inline std::map<string, Human> Human::GetCopyHumanMap() {
 	std::map<string, Human> hm;
 
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:<20}  {:>14p}  <-  {:<14p}.\n", "GetCopyHumanMap()   ", (void*)&hm, (void*)&humanMap);
+	std::cerr << debugHeader << format("{:<20}  {:>14p}  <-  {:<14p}.\n", "GetCopyHumanMap()   ", (void*)&hm, (void*)&humanMap);
 #endif // DEBUG
 
 	for (auto& [animalLicense, human] : humanMap)

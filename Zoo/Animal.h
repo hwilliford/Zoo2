@@ -1,9 +1,20 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <format>
-#include <random>
 
+#if __has_include(<format>)
+#include <format>
+using std::format;
+#endif
+
+#if __has_include(<fmt/core.h>)
+#include <fmt/core.h>
+#include <fmt/format.h>
+using fmt::format;
+using fmt::v8::format;
+#endif
+
+#include <random>
 
 #define ANIMAL_HEADER
 #define ENABLE_DEBUG		// comment out to disable debugging
@@ -200,21 +211,21 @@ public:
 
 void Animal::Print() const
 {
-	std::cout << std::format("{:=^80}\n", " Animal Record ");
+	std::cout << format("{:=^80}\n", " Animal Record ");
 #ifdef ENABLE_DEBUG
-	std::cout << std::format("\t{:40} {:>15p}.\n", "Object Address  :", (void*)this);
-#endif ENABLE_DEBUG
+	std::cout << format("\t{:40} {:>15p}.\n", "Object Address  :", (void*)this);
+#endif 
 
-	std::cout << std::format("\tCount of animals:{:>20}\n", GetNumberAnimals());
-	std::cout << std::format("\tTitle of animal :{:>20}\n", GetTitle());
-	std::cout << std::format("\tName of animal  :{:>20}\n", GetName());
-	std::cout << std::format("\tAnimal license #:{:>20}\n", GetLicense());
-	std::cout << std::format("\tGreeting        :{:>20}\n", GetGreeting());
-	std::cout << std::format("\tBody Structure  :{:>20}\n", GetBodyStructure());
-	std::cout << std::format("\tHabitat         :{:>20}\n", GetHabitat());
-	std::cout << std::format("\tDiet            :{:>20}\n", GetDiet());
-	std::cout << std::format("\tLocomotion      :{:>20}\n", GetLocomotion());
-	std::cout << std::format("\tRespiration     :{:>20}\n", GetRespiration());
+	std::cout << format("\tCount of animals:{:>20}\n", GetNumberAnimals());
+	std::cout << format("\tTitle of animal :{:>20}\n", GetTitle());
+	std::cout << format("\tName of animal  :{:>20}\n", GetName());
+	std::cout << format("\tAnimal license #:{:>20}\n", GetLicense());
+	std::cout << format("\tGreeting        :{:>20}\n", GetGreeting());
+	std::cout << format("\tBody Structure  :{:>20}\n", GetBodyStructure());
+	std::cout << format("\tHabitat         :{:>20}\n", GetHabitat());
+	std::cout << format("\tDiet            :{:>20}\n", GetDiet());
+	std::cout << format("\tLocomotion      :{:>20}\n", GetLocomotion());
+	std::cout << format("\tRespiration     :{:>20}\n", GetRespiration());
 }
 
 Animal::Animal() {
@@ -272,7 +283,7 @@ Animal::Animal(const std::string& n, const std::string& t) {
 Animal::~Animal() {
 	numAnimals--;
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << std::format("{:40} {:>15p}.\n", "Animal destructor called for", (void*)this);
+	std::cerr << debugHeader << format("{:40} {:>15p}.\n", "Animal destructor called for", (void*)this);
 #endif
 }
 
