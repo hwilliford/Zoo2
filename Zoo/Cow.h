@@ -127,7 +127,7 @@ inline unsigned int Cow::GetRandomCowWeight()
 // overloaded assignment operator
 Cow &Cow::operator=(const Cow &c) {
 #ifdef ENABLE_DEBUG
-	std::cerr << debugHeader << format("{:<20}  {:>14p}  =   {:<14p}.\n", "overloaded= for Cow", (void*)this, (void*)&c);
+	std::cerr << debugHeader << format("{:<20}  {:>14p}  =   {:>14p}.\n", "overloaded= for Cow", (void*)this, (void*)&c);
 #endif // DEBUG
 
 	if (this != &c) {
